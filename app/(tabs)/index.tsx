@@ -1,23 +1,27 @@
-import { StyleSheet } from 'react-native';
+import { Link } from 'expo-router';
+import { StyleSheet, View, Text } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
 
 export default function TabOneScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
+      <SafeAreaView style = {styles.container}>
+        <View style = {{ flex : 1, backgroundColor : 'white', padding : 16 }}>
+            <Link href={'/editor'} style= {{ width : 70, paddingHorizontal : 18, paddingVertical : 7, borderRadius : 5, backgroundColor : '#f4f4f4'}} >              
+              <Text>Editor</Text>
+            </Link>
+        </View>
+      </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  webViewStyle : {
+    height : 400
   },
   title: {
     fontSize: 20,
