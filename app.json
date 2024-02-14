@@ -13,7 +13,8 @@
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
-      "**/*"
+      "**/*",
+      "./assets/editor_html/index.html"
     ],
     "ios": {
       "supportsTablet": true,
@@ -47,6 +48,10 @@
     },
     "runtimeVersion": {
       "policy": "appVersion"
+    },
+    "packagerOpts": {
+      "config": "metro.config.js",
+      "sourceExts": ["html"]
     },
     "updates": {
       "url": "https://u.expo.dev/8abe8122-bbc0-4010-b17b-d8bcfe4af782"
