@@ -2,8 +2,26 @@ import { StyleSheet, View, Text, ScrollView, TouchableOpacity, StatusBar,  } fro
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons';
 import Btn_New_Note from '../../components/btn_editor';
+import { useGlobalContext } from '../../context/global_context'
+import { useEffect, useState } from 'react';
+import Column from '../../components/columns';
 
 export default function TabTwoScreen() {
+  const [element, setElement] = useState([])
+  const { data_note } = useGlobalContext()
+
+  const readAllKeys = async () => {
+    setElement(data_note)
+  }
+
+  useEffect(() => {
+    readAllKeys()
+  }, [])
+
+  useEffect(() => {
+    readAllKeys()
+  }, [data_note])
+
   return (
     <SafeAreaView style={{...styles.container, position : 'relative'}}>
         <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
@@ -16,9 +34,19 @@ export default function TabTwoScreen() {
             </TouchableOpacity>
         </View>
          <Btn_New_Note />
-      <ScrollView style = {{...styles.container, position : 'relative', top:0}}>
-        <View style = {styles.vide}></View>
-      </ScrollView>
+        <ScrollView style = {{...styles.container, position : 'relative', top:0}} showsVerticalScrollIndicator = {false}>
+          <View style = {{ height : 68}}></View>
+          <View style = {styles.element_block}>
+            {
+              element.length === 0
+              ? (<View></View>)
+              :( <>
+                <Column data = {element} />  
+              </> )
+            }    
+          </View>
+          <View style = {styles.vide}></View>
+        </ScrollView>
     </SafeAreaView>
   );
 }
@@ -43,6 +71,10 @@ const styles = StyleSheet.create({
   },
   vide : {
     height : 24 + 48
-  }
+  },
+  element_block : {
+    paddingHorizontal : 8
+  },
+
   
 });

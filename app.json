@@ -14,7 +14,7 @@
     },
     "assetBundlePatterns": [
       "**/*",
-      "./assets/editor_html/index.html"
+      "assets/**"
     ],
     "ios": {
       "supportsTablet": true,
@@ -51,7 +51,8 @@
     },
     "packagerOpts": {
       "config": "metro.config.js",
-      "sourceExts": ["html"]
+      "sourceExts": ["html"],
+      "assetExts" : ["html"]
     },
     "updates": {
       "url": "https://u.expo.dev/8abe8122-bbc0-4010-b17b-d8bcfe4af782"

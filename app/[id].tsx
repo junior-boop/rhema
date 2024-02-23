@@ -1,77 +1,80 @@
-import { StyleSheet, View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, ActivityIndicator, Platform } from 'react-native';
 import { Asset, useAssets } from 'expo-asset';
 import { WebView } from 'react-native-webview';
 import { Stack } from 'expo-router';
 import { useGlobalContext } from '@/context/global_context';
 import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
+import StandardBtn from '../components/standardBtn';
+
 
 export default function TabOneScreen() {
   const { SaveData, data_note } = useGlobalContext()
+
+  const [html, setHTML] = useState('{"blocks":[{"type":"titre","data":{"text":"Votres titre"}},{"type":"paragraph","data":{"text":"Faites nous grandir dans la foi"}}]}')
   const {id} = useLocalSearchParams()
   const [note_data, set_note_data] = useState({
     id : id,
     content : '',
     createdAt : Date.now(),
-    createdBy : 'Daniel Seppo eke',
     published : false,
     epingler : 0
   })
+    
+    
+    // const readDatabse = async () => {
+    //   if(!Data.content){
+    //     setHTML('{"blocks":[{"type":"titre","data":{"text":"Votre titre"}},{"type":"paragraph","data":{"text":"Faites nous grandir dans la foi"}}]}')
+    //   } else {
+    //     setHTML(Data.content)
+    //   }
+    // }
+    
+    const handleSaveContent = () => {
+      SaveData(note_data)
+      console.log(note_data)
+      // setItem(JSON.stringify(note_data))
+    }
+
+    useEffect(() => {
+      // readDatabse()
+    }, [])
 
 
-  // const [assets, error] = useAssets([require('../assets/editor_html/index.html')]);
-  const  html  = Asset.fromModule(require('../assets/editor_html/index.html'))
-    const script = `
+
+    const inject_script = `
         const data = document.querySelector("#data")
         const output = document.querySelector("#output") 
-        data.innerHTML = ${data_note[0].content}
+        
+        data.innerText = '${html}'
         setInterval(() => {
-            
-            window.ReactNativeWebView.postMessage(output.innerText);
+          window.ReactNativeWebView.postMessage(output.innerText);
         }, 1000)
         true;
     `
 
-    const beforeLoad = `
-      const data = document.querySelector("#data")
-      data.innerHTML = ${data_note[0].content}
-        alert(data.innerText)
-      // window.ReactNativeWebView.postMessage(data.innerText);
-      true;
-    `
-
-    const handleData = () => {
-      return note_data
-    }
-    
-    useEffect(() => {
-      console.log(note_data, data_note)
-      return () => {
-        SaveData(handleData())
-      }
-    }, [note_data])
-
   return (
     <>
-        <Stack
-            screenOptions={{
+        <Stack.Screen
+            options={{
                 animation : 'fade_from_bottom',
                 title : '',
-                headerRight(props) {
-                    return(
-                        <View>
-                            <TouchableOpacity>
-                                <Text>touchable</Text>
-                            </TouchableOpacity>
-                        </View>
-                    )
-                },
+                headerRight : () => (
+                  <View style = {styles.headerRight}>
+                      <StandardBtn name='pin-outline' />
+                      <StandardBtn name='content-save-outline' onPress={handleSaveContent} />
+                      <StandardBtn name='delete-outline' />
+                  </View>
+                ),
             }}
         />
+
+        
         <WebView
             style = {styles.webViewStyle}
             originWhitelist={['*']}
-            source={html}
+            source = {{ uri : 'editor-a1b.pages.dev'}}
+            javaScriptEnabled
             startInLoadingState = {true}
             renderLoading={() => (
               <ActivityIndicator 
@@ -79,14 +82,15 @@ export default function TabOneScreen() {
                 color={'#000'}
               />
             )}
-            injectedJavaScript={script}
-            injectedJavaScriptBeforeContentLoaded={beforeLoad}
+            injectedJavaScript={inject_script}
             onMessage={e => set_note_data((prev) => {
               return {
                 ...prev,
                 content : e.nativeEvent.data
               }
             })}
+
+            onError={(e) => console.log('il y a une erreur :', e)}
         />
 
     </>
@@ -109,4 +113,10 @@ const styles = StyleSheet.create({
     height: 1,
     width: '80%',
   },
+
+  headerRight : {
+    flexDirection : 'row',
+    alignItems : 'center',  
+    gap : 8
+  }
 });

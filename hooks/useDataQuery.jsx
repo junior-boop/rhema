@@ -1,4 +1,3 @@
-import * as SQLite from 'expo-sqlite/next';
 import { useState } from 'react';
 
 /**
@@ -8,36 +7,43 @@ import { useState } from 'react';
 
 
 
-async function database(){
-    
-    const db = await SQLite.openDatabaseAsync('database_note')
 
-    await db.execAsync(`
-        DROP TABLE IF EXISTS Notes;
-        CREATE TABLE IF NOT EXISTS Notes (
-            id INTEGER PRIMARY KEY NOT NULL,
-            content VARCHAR(3000) not NULL,
-            createdAt INTEGER NOT NULL,
-            published VARCHAR(20) NOT NULL,
-            createdBy VARCHAR(255) NOT NULL,
-            epingler INTEGER NOT NULL
-        );
-    `);
-
-    return db
-}
 
 export const  setData = async (Data) => {
-    const db = await database()
-    const {content, createdAt, epingler, createdBy, id, published} = Data
-    const result = await db.runAsync('INSERT INTO Notes (id, content, createdAt, published, createdBy, epingler) VALUES (?, ?, ?, ?, ?, ?)', id, content, createdAt, published, createdBy, epingler);
-
-    return { lastInsertRowId : result.lastInsertRowId, changes : result.changes, result}
+    const {content, epingler, id, published} = Data
+    console.log(Data)
+    try {
+        const jsonValue = JSON.stringify(Data);
+        const request = await fetch('https://nuvelserver.godigital.workers.dev/note/daniel_10000-20000-30000/doc/'+id+'/content', {
+            method : 'PUT',
+            body : jsonValue,
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+        })
+        const response =  await request.json()
+    } catch (error) {
+        console.log(error);
+    }
+    // teste
+    return Data
 }
 
 
-export const getData = async () => {
-    const db = await database()
-    const allRows = await db.getAllAsync('SELECT * FROM Notes');
-    return allRows
+export const getData = async (id) => {
+
+    try {
+        const jsonValue = await AsyncStorage.getItem(id);
+        return jsonValue != null ? JSON.parse(jsonValue) : null;
+      } catch (e) {
+        console.log(error);
+      }
+}
+
+
+export const getAllKey = async () => {
+    const request = await fetch('https://nuvelserver.godigital.workers.dev/note/daniel_10000-20000-30000')
+    const response =  await request.json()
+    
+   return response
 }
