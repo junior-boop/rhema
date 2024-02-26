@@ -6,18 +6,20 @@ export default function GlobalContextProvider({children}){
     
     const [data_note, setData_note] = useState([])
 
-    /**
-     * @typedef {{name : string, ville : string}} user
-     * @param {{content : string, createdAt : number, createdBy : user, epingler : boolean, published : boolean, id : string}} someData 
-     */
-    const SaveData = useCallback((someData) => {
-        const index = data_note.findIndex(el => el.id === someData.id)
-        if( index === -1) {
+    
+    const SaveData = useCallback(
+        /**
+         * @typedef {{name : string, userId : string, }} USER
+         * @param {{note_content : string, createdAt : number, createdBy : USER, epingler : boolean, published : boolean, noteId : string, userId : string}} someData 
+         */
+        (someData) => {
+        const element = data_note.filter((el) => el.noteId === someData.noteId)
+        if(element.length === 0) {
             setData_note(prev => [...prev, someData])
         } else {
-            setData_note(prev => prev.fill(someData, index, index+1))
-            setData(someData)
-            console.log(data_note, index)
+            const otherElement = data_note.filter((el) => el.noteId !== someData.noteId)
+            // console.log(someData)
+            setData_note([...otherElement, someData])
         }
     }, [data_note])
 

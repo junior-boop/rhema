@@ -11,12 +11,9 @@ export default function TabTwoScreen() {
   const { data_note } = useGlobalContext()
 
   const readAllKeys = async () => {
-    setElement(data_note)
+    const order = data_note.sort((a, b) => a.updatedAt - b.updatedAt)
+    setElement(order)
   }
-
-  useEffect(() => {
-    readAllKeys()
-  }, [])
 
   useEffect(() => {
     readAllKeys()
@@ -41,7 +38,7 @@ export default function TabTwoScreen() {
               element.length === 0
               ? (<View></View>)
               :( <>
-                <Column data = {element} />  
+                <Column data = {data_note.reverse()} />  
               </> )
             }    
           </View>

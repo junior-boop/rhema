@@ -11,42 +11,49 @@ import StandardBtn from '../components/standardBtn';
 export default function TabOneScreen() {
   const { SaveData, data_note } = useGlobalContext()
 
-  const [html, setHTML] = useState('{"blocks":[{"type":"titre","data":{"text":"Votres titre"}},{"type":"paragraph","data":{"text":"Faites nous grandir dans la foi"}}]}')
-  const {id} = useLocalSearchParams()
+  const {id, userid, note_content} = useLocalSearchParams()
+  const html = note_content !== null ? note_content : '{"blocks":[{"type":"titre","data":{"text":"Votres titre"}},{"type":"paragraph","data":{"text":"Faites nous grandir dans la foi"}}]}' 
+  
   const [note_data, set_note_data] = useState({
-    id : id,
-    content : '',
-    createdAt : Date.now(),
+    noteId : id,
+    note_content : '',
     published : false,
     epingler : 0
   })
+
     
-    
-    // const readDatabse = async () => {
-    //   if(!Data.content){
-    //     setHTML('{"blocks":[{"type":"titre","data":{"text":"Votre titre"}},{"type":"paragraph","data":{"text":"Faites nous grandir dans la foi"}}]}')
-    //   } else {
-    //     setHTML(Data.content)
-    //   }
-    // }
-    
-    const handleSaveContent = () => {
-      SaveData(note_data)
-      console.log(note_data)
-      // setItem(JSON.stringify(note_data))
+    const handleSaveContent = async () => {
+      
+      try {
+        const jsonValue = JSON.stringify(note_data);
+        const response = await fetch(`https://nuvelserver.godigital.workers.dev/note/${userid}/doc/${id}/content`, {
+            method : 'PUT',
+            body : jsonValue,
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+        })
+        SaveData({...note_data, updatedAt : Date.now()})
+    } catch (error) {
+        console.log(error);
+    }
+      
     }
 
-    useEffect(() => {
-      // readDatabse()
-    }, [])
 
 
 
     const inject_script = `
-        const data = document.querySelector("#data")
-        const output = document.querySelector("#output") 
         
-        data.innerText = '${html}'
+        const output = document.querySelector("#output") 
+        function setData() {
+          const data = document.getElementById("data")
+          data.innerText = JSON.stringify(${html})
+
+          return data.innerHTML
+        }
+        
+        setData()
         setInterval(() => {
           window.ReactNativeWebView.postMessage(output.innerText);
         }, 1000)
@@ -86,7 +93,7 @@ export default function TabOneScreen() {
             onMessage={e => set_note_data((prev) => {
               return {
                 ...prev,
-                content : e.nativeEvent.data
+                note_content : e.nativeEvent.data
               }
             })}
 

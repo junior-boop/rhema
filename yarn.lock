@@ -1207,6 +1207,11 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@dilane3/gx@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.npmjs.org/@dilane3/gx/-/gx-1.4.0.tgz"
+  integrity sha512-v9x3oHIKc+fpdVDMai5Lu44bM+30jZFSiNMmSZhx29GGgrZ+p83rW5Q9f9UAicB3314ONA4r/smECun2YiEfZw==
+
 "@expo/bunyan@^4.0.0":
   version "4.0.0"
   resolved "https://registry.npmjs.org/@expo/bunyan/-/bunyan-4.0.0.tgz"

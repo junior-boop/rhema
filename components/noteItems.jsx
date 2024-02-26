@@ -1,38 +1,32 @@
-import { useEffect, useState } from "react"
-import { View, Text, StyleSheet, TouchableNativeFeedback } from "react-native"
+import { useEffect, useMemo, useState } from "react"
+import { View, Text, StyleSheet, TouchableNativeFeedback, ScrollView, TouchableOpacity } from "react-native"
+import { router } from 'expo-router'
 
 export default function NoteItems({note}){
   const [data, setData] = useState(null)
       
-    // const Blocks_reference = useMemo(() => {
-    //     if(note!== null){
-    //         const t = note.content
-    //       const jsonvalue = JSON.parse(t.length > 1 && t)
-          
-    //       if(t.length === 0){
-    //         return null
-    //       }
-    //       if( t.length > 3){
-    //         return t.slice(0, 2)
-    //       } else return t
-    //     } else return null
-    //   }, [note])
-  
-
-
-  
-   
-  
-
       
     useEffect(() => {
-      // console.log(typeof note.note_content, 'note : '+ note.note_content.length)
       if(note !== undefined && typeof note.note_content === 'string'){
-        const note_content = note.note_content.length === 0 ? [] : JSON.parse(note.note_content)
+        const note_content = note.note_content.length === 0 ? null : JSON.parse(note.note_content)
         setData(note_content)
-      }
-      // const note_content = []
-    }, [])
+      }      
+    }, [note])
+
+    const Blocks_reference = useMemo(() => {
+      if(note!== undefined && typeof note.note_content === 'string'){
+          if(data !== null && data.hasOwnProperty('blocks')){
+            const t = data.blocks.filter((el) => el.type === 'bible_ref')
+            if(t.length === 0){
+              return null
+            }
+            if( t.length > 3){
+              return t.slice(0, 2)
+            } else return t
+          }
+        
+      } else return null
+    }, [data])
 
     /**
      * @returns {Array}
@@ -60,62 +54,86 @@ export default function NoteItems({note}){
     }
 
     return(
-      <TouchableNativeFeedback onPress={() => {
-        console.log(data)
+      <View style = {{
+        ...styles.View_1,
+        borderRadius : 8,
+        overflow : 'hidden'
       }}>
-        <View style = {styles.View_1}>
-        {
-          data !== null && data.hasOwnProperty('blocks') && (<Text style = {styles.titre}>{block_titre()}</Text>)
-        }
-        <View style = {styles.View_2}>
-          {data!== null && block_text().map((el, key) => (<Text key={key}>{el.value}</Text>))}
-          <View ></View>
+        <TouchableOpacity  style = {{ borderRadius : 8}} onPress={() => {
+            console.log(note.noteId)
+            router.navigate({
+              pathname : '/[id]', 
+              params : {
+                id : note.noteId, 
+                userid : note.userId, 
+                note_content : note.note_content.length === 0 ? null : note.note_content
+              }
+            })
+        }}>
+          <View style = {{ paddingHorizontal : 14}}>
+          {
+            data !== null && data.hasOwnProperty('blocks') && (<Text style = {styles.titre}>{block_titre()}</Text>)
+          }
+          <View style = {styles.View_2}>
+            {data !== null && block_text().map((el, key) => <Text style = {styles.texte} key={key}>{el.data.text}</Text>)}
+            <View ></View>
+          </View>
+          
         </View>
-        <View style = {styles.ref_block}>
-          {/* {Blocks_reference() !== null && Blocks_reference().map((el, key) => (<Text className='px-2 py-1 rounded-sm text-slate-800 font-bold text-xs bg-slate-200 w-max' key={key}>el.data.reference</Text>))} */}
-        </View>
+        </TouchableOpacity>
+        <ScrollView horizontal = {true} contentContainerStyle = {{ paddingHorizontal : 14, gap : 8, paddingTop : 12}} showsHorizontalScrollIndicator = {false}>
+            {Blocks_reference !== null && Blocks_reference !== undefined && Blocks_reference.map((el, key) => (<Text style = {styles.ref} key={key}>{el.data.reference}</Text>))}
+          </ScrollView>
       </View>
-      </TouchableNativeFeedback>
     )
   }
-
 
 const styles = StyleSheet.create({
     View_1 : {
         width : '100%',
-        borderRadius : 8,
         backgroundColor : "white", 
         borderColor : '#e2e8f0',
         borderWidth : 1,
-        padding : 16,
+        paddingVertical : 12,
         maxHeight : 300,
         userSelect : 'none'
     },
 
+    ref : {
+      paddingHorizontal : 8,
+      paddingVertical : 4,
+      borderRadius : 4,
+      color : '#1e293b',
+      fontWeight : '800',
+      fontSize : 12,
+      backgroundColor : "#f1f5f9",
+      width : 'auto'
+    },
+
     titre : {
-        fontWeight : '800',
-        fontSize : 18,
-        marginBottom : 14,
+        fontWeight : '700',
+        fontSize : 16,
+        marginBottom : 5
     }, 
-    View_2 : {
-        flex : 1, 
+    View_2 : { 
         overflow : 'hidden',
-        position : 'relative'
+        position : 'relative',
+        height : 'auto',
+        maxHeight : 200
     },
 
     texte : {
-        fontSize : 12,
-        lineHeight : 1.1
+        fontSize : 14,
+        lineHeight : 16,
+        color : '#444'
     },
-    ref_block : {
-        paddingTop : 8,
-    }, 
     ref : {
         paddingHorizontal : 8, 
+        paddingVertical : 4,
         borderRadius : 4, 
         color : '#1e293b',
         fontWeight : '800',
-        fontSize : 10, 
+        fontSize : 12, 
         backgroundColor : '#e2e8f0',
         width : 'auto'
     }

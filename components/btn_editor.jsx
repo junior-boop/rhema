@@ -11,15 +11,17 @@ export default function Btn_New_Note(){
     const handleClick = async () => {
         const id = IdGenerator(15, 5)
         const obj = {
-            id : id + '_' + Date.now(),
-            content : '',
+            noteId : id + '_' + Date.now(),
+            note_content : '',
             published : 'false',
-            epingler : 0
+            epingler : 0,
+            createdAt : Date.now(),
+            updatedAt : Date.now()
           }
          
          try {
             const jsonValue = JSON.stringify(obj);
-            const request = await fetch('https://nuvelserver.godigital.workers.dev/note/daniel_10000-20000-30000/doc/'+ obj.id, {
+            const request = await fetch('https://nuvelserver.godigital.workers.dev/note/daniel_10000-20000-30000/doc/'+ obj.noteId, {
                 method : 'POST',
                 body : jsonValue,
                 headers : {
@@ -27,13 +29,20 @@ export default function Btn_New_Note(){
                 }
             })
             const response =  await request.json()
-            SaveData(response)
+            SaveData(response[0])
+            console.log(response[0])
         } catch (error) {
             // saving error
             console.log(error);
         }
 
-        router.navigate({pathname : '/[id]', params : { id : obj.id}})
+        router.navigate({
+            pathname : '/[id]', 
+            params :  {
+                id : obj.noteId, 
+                userid : "daniel_10000-20000-30000", 
+                note_content : '{"blocks":[{"type":"titre","data":{"text":"Votres titre"}},{"type":"paragraph","data":{"text":"Faites nous grandir dans la foi"}}]}'
+              }})
     }
 
     return(
