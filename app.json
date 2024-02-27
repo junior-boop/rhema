@@ -2,7 +2,7 @@
   "expo": {
     "name": "Rhema",
     "slug": "Rhema",
-    "version": "1.0.0",
+    "version": "0.0.5",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
