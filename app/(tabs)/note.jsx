@@ -4,7 +4,9 @@ import { AntDesign } from '@expo/vector-icons';
 import Btn_New_Note from '../../components/btn_editor';
 import { useGlobalContext } from '../../context/global_context'
 import { useEffect, useState } from 'react';
+import Titre_Page from '../../components/titre_page'
 import Column from '../../components/columns';
+import Published_list from '../../components/publish_list'
 
 export default function TabTwoScreen() {
   const [element, setElement] = useState([])
@@ -32,7 +34,9 @@ export default function TabTwoScreen() {
         </View>
          <Btn_New_Note />
         <ScrollView style = {{...styles.container, position : 'relative', top:0}} showsVerticalScrollIndicator = {false}>
-          <View style = {{ height : 68}}></View>
+          <View style = {{ height : 70}}></View>
+          <Published_list />
+          <Titre_Page titre='Brouillons' />
           <View style = {styles.element_block}>
             {
               element.length === 0

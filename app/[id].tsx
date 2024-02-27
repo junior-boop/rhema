@@ -1,5 +1,4 @@
 import { StyleSheet, View, Text, TouchableOpacity, ActivityIndicator, Platform } from 'react-native';
-import { Asset, useAssets } from 'expo-asset';
 import { WebView } from 'react-native-webview';
 import { Stack } from 'expo-router';
 import { useGlobalContext } from '@/context/global_context';
@@ -10,6 +9,7 @@ import StandardBtn from '../components/standardBtn';
 
 export default function TabOneScreen() {
   const { SaveData, data_note } = useGlobalContext()
+  const [isSaving, setIsSaving] = useState(false)
 
   const {id, userid, note_content} = useLocalSearchParams()
   const html = note_content !== null ? note_content : '{"blocks":[{"type":"titre","data":{"text":"Votres titre"}},{"type":"paragraph","data":{"text":"Faites nous grandir dans la foi"}}]}' 
@@ -23,6 +23,7 @@ export default function TabOneScreen() {
 
     
     const handleSaveContent = async () => {
+      setIsSaving(true)
       
       try {
         const jsonValue = JSON.stringify(note_data);
@@ -34,6 +35,9 @@ export default function TabOneScreen() {
             }
         })
         SaveData({...note_data, updatedAt : Date.now()})
+        if(response.ok){
+          setIsSaving(false)
+        }
     } catch (error) {
         console.log(error);
     }
@@ -69,7 +73,9 @@ export default function TabOneScreen() {
                 headerRight : () => (
                   <View style = {styles.headerRight}>
                       <StandardBtn name='pin-outline' />
-                      <StandardBtn name='content-save-outline' onPress={handleSaveContent} />
+                      {
+                        isSaving ? <View style = {{ width :42, height : 42, borderRadius : 50, alignItems : 'center', justifyContent : 'center', backgroundColor : '#f0f9ff' }}><ActivityIndicator size={'small'} color={'#000'} /></View> : <StandardBtn name='content-save-outline' onPress={handleSaveContent} />
+                      }
                       <StandardBtn name='delete-outline' />
                   </View>
                 ),
@@ -123,7 +129,7 @@ const styles = StyleSheet.create({
 
   headerRight : {
     flexDirection : 'row',
-    alignItems : 'center',  
-    gap : 8
+    alignItems : 'center',
+    gap : 3
   }
 });

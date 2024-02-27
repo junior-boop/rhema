@@ -1,10 +1,16 @@
 import { useEffect, useMemo, useState } from "react"
 import { View, Text, StyleSheet, TouchableNativeFeedback, ScrollView, TouchableOpacity } from "react-native"
 import { router } from 'expo-router'
+import { LinearGradient } from "expo-linear-gradient"
+import NoteLongPress_Btn from './btn_noteLongPress'
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function NoteItems({note}){
   const [data, setData] = useState(null)
-      
+  // const { LongSel } = useGlobalContext()
+  // const {longSelection, setLongSelection} = LongSel
+
+  const [longSelection, setLongSelection] = useState(false)
       
     useEffect(() => {
       if(note !== undefined && typeof note.note_content === 'string'){
@@ -53,14 +59,52 @@ export default function NoteItems({note}){
       }
     }
 
+    const handleCloseSelect = () => {
+      setLongSelection(false)
+    }
+
     return(
       <View style = {{
         ...styles.View_1,
-        borderRadius : 8,
-        overflow : 'hidden'
+        borderRadius : 8, 
+        borderColor : longSelection ? '#000' : '#e2e8f0',
+        overflow : 'hidden',
+        position : 'relative',
       }}>
-        <TouchableOpacity  style = {{ borderRadius : 8}} onPress={() => {
-            console.log(note.noteId)
+        {
+          longSelection && (<LinearGradient 
+            colors={['rgba(255,255,255, 1)', 'transparent']}
+            style = {{
+              position : 'absolute',
+              zIndex : 2,
+              top : 0,
+              left : 0,
+              height : "100%",
+              width : "100%",
+            }}
+          />)
+        }
+        {
+          longSelection && (<View style = {{
+            position : 'absolute',
+            top : '3%',
+            left : 0,
+            width : "96%",
+            zIndex : 3, 
+            flexDirection : 'row',
+            gap: 4,
+            justifyContent : 'flex-end'
+  
+          }}>
+  
+            <NoteLongPress_Btn icon={<MaterialIcons name="publish" size={18} color="white"/>} />
+            <NoteLongPress_Btn icon={<MaterialIcons name="delete-outline" size={18} color="white" />} />
+            <NoteLongPress_Btn icon={<MaterialIcons name="close" color={'white'} size={18} onPress={handleCloseSelect} />} />
+  
+          </View>)
+        }
+        <TouchableOpacity  style = {{ borderRadius : 8}} 
+        onPress={() => {
             router.navigate({
               pathname : '/[id]', 
               params : {
@@ -69,7 +113,12 @@ export default function NoteItems({note}){
                 note_content : note.note_content.length === 0 ? null : note.note_content
               }
             })
-        }}>
+        }}
+
+        onLongPress={() => {
+          setLongSelection(true)
+        }}
+        >
           <View style = {{ paddingHorizontal : 14}}>
           {
             data !== null && data.hasOwnProperty('blocks') && (<Text style = {styles.titre}>{block_titre()}</Text>)
@@ -91,8 +140,7 @@ export default function NoteItems({note}){
 const styles = StyleSheet.create({
     View_1 : {
         width : '100%',
-        backgroundColor : "white", 
-        borderColor : '#e2e8f0',
+        backgroundColor : "white",
         borderWidth : 1,
         paddingVertical : 12,
         maxHeight : 300,
