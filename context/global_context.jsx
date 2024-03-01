@@ -1,10 +1,11 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { getData, setData, getAllKey } from "../hooks/useDataQuery";
+import { getData, setData, getAllKey, getAllArticles } from "../hooks/useDataQuery";
 const GlobalContext = createContext()
 
 export default function GlobalContextProvider({children}){
     
     const [data_note, setData_note] = useState([])
+    const [data_articles, setArticles] = useState([])
     const [longSelection, setLongSelection] = useState(false),
     LongSel = {longSelection, setLongSelection}
 
@@ -30,12 +31,18 @@ export default function GlobalContextProvider({children}){
         setData_note(data)
     }
 
+    const getArticles = async () => {
+        const data = await getAllArticles()
+        setArticles(data)
+    }
+
     useEffect(() => {
         getNote()
+        getAllArticles()
     }, [])
 
     return(
-        <GlobalContext.Provider value={{data_note, SaveData, LongSel}}>
+        <GlobalContext.Provider value={{data_note, data_articles, SaveData, LongSel}}>
             {children}
         </GlobalContext.Provider>
     )

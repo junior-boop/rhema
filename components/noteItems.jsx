@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
-import { View, Text, StyleSheet, TouchableNativeFeedback, ScrollView, TouchableOpacity } from "react-native"
+import { View, StyleSheet, TouchableNativeFeedback, ScrollView, TouchableOpacity } from "react-native"
+import { Text } from './Themed'
 import { router } from 'expo-router'
 import { LinearGradient } from "expo-linear-gradient"
 import NoteLongPress_Btn from './btn_noteLongPress'
@@ -7,8 +8,6 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 export default function NoteItems({note}){
   const [data, setData] = useState(null)
-  // const { LongSel } = useGlobalContext()
-  // const {longSelection, setLongSelection} = LongSel
 
   const [longSelection, setLongSelection] = useState(false)
       
@@ -40,8 +39,15 @@ export default function NoteItems({note}){
     const block_text = () => {
       if(data !== null && data.hasOwnProperty('blocks')){
           const t = data.blocks.filter((el) => el.type === 'paragraph')
-          return t
-      } else return []
+          let String = ''
+          t.forEach((element, key) => {
+            const text = element.data.text.replace('&nbsp;', '')
+            if(key < 1) String += text
+            if(key >= 1) String += "\n"+text
+          });
+
+          return String
+      } else return "Block Vide"
     }
   
     const block_titre = () => {
@@ -62,6 +68,8 @@ export default function NoteItems({note}){
     const handleCloseSelect = () => {
       setLongSelection(false)
     }
+
+    const valuetext = 'Block vide'
 
     return(
       <View style = {{
@@ -97,13 +105,17 @@ export default function NoteItems({note}){
   
           }}>
   
-            <NoteLongPress_Btn icon={<MaterialIcons name="publish" size={18} color="white"/>} />
+            {data !== null && <NoteLongPress_Btn icon={<MaterialIcons name="publish" size={18} color="white"/>} onPress={() => {
+              router.navigate({pathname : '/modal', params : {note_content : note.note_content, id:note.noteId}})
+              setLongSelection(false)
+            } } />}
             <NoteLongPress_Btn icon={<MaterialIcons name="delete-outline" size={18} color="white" />} />
             <NoteLongPress_Btn icon={<MaterialIcons name="close" color={'white'} size={18} onPress={handleCloseSelect} />} />
   
           </View>)
         }
-        <TouchableOpacity  style = {{ borderRadius : 8}} 
+        <TouchableOpacity
+
         onPress={() => {
             router.navigate({
               pathname : '/[id]', 
@@ -121,18 +133,18 @@ export default function NoteItems({note}){
         >
           <View style = {{ paddingHorizontal : 14}}>
           {
-            data !== null && data.hasOwnProperty('blocks') && (<Text style = {styles.titre}>{block_titre()}</Text>)
+            data !== null && data.hasOwnProperty('blocks') && (<Text fontWeight="500" style = {styles.titre}>{block_titre()}</Text>)
           }
           <View style = {styles.View_2}>
-            {data !== null && block_text().map((el, key) => <Text style = {styles.texte} key={key}>{el.data.text}</Text>)}
-            <View ></View>
+            {data !== null && <Text fontWeight="400" style = {styles.texte} >{block_text()}</Text>}
+            {data === null && <Text style = {{ color : '#999' }}>{valuetext}</Text>}
           </View>
           
         </View>
         </TouchableOpacity>
-        <ScrollView horizontal = {true} contentContainerStyle = {{ paddingHorizontal : 14, gap : 8, paddingTop : 12}} showsHorizontalScrollIndicator = {false}>
-            {Blocks_reference !== null && Blocks_reference !== undefined && Blocks_reference.map((el, key) => (<Text style = {styles.ref} key={key}>{el.data.reference}</Text>))}
-          </ScrollView>
+        { Blocks_reference !== null && Blocks_reference !== undefined && (<ScrollView horizontal = {true} contentContainerStyle = {{ paddingHorizontal : 14, gap : 8, paddingTop : 12}} showsHorizontalScrollIndicator = {false}>
+            {Blocks_reference.map((el, key) => (<Text fontWeight="600" style = {styles.ref} key={key}>{el.data.reference}</Text>))}
+          </ScrollView>)}
       </View>
     )
   }
@@ -146,33 +158,21 @@ const styles = StyleSheet.create({
         maxHeight : 300,
         userSelect : 'none'
     },
-
-    ref : {
-      paddingHorizontal : 8,
-      paddingVertical : 4,
-      borderRadius : 4,
-      color : '#1e293b',
-      fontWeight : '800',
-      fontSize : 12,
-      backgroundColor : "#f1f5f9",
-      width : 'auto'
-    },
-
     titre : {
-        fontWeight : '700',
         fontSize : 16,
-        marginBottom : 5
+        marginBottom : 5,
+        lineHeight : 18
     }, 
     View_2 : { 
         overflow : 'hidden',
         position : 'relative',
         height : 'auto',
-        maxHeight : 200
+        maxHeight : 150
     },
 
     texte : {
         fontSize : 14,
-        lineHeight : 16,
+        lineHeight : 17,
         color : '#444'
     },
     ref : {
@@ -180,8 +180,7 @@ const styles = StyleSheet.create({
         paddingVertical : 4,
         borderRadius : 4, 
         color : '#1e293b',
-        fontWeight : '800',
-        fontSize : 12, 
+        fontSize : 13, 
         backgroundColor : '#e2e8f0',
         width : 'auto'
     }

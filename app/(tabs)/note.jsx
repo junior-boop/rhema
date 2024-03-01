@@ -10,7 +10,7 @@ import Published_list from '../../components/publish_list'
 
 export default function TabTwoScreen() {
   const [element, setElement] = useState([])
-  const { data_note } = useGlobalContext()
+  const { data_note, data_articles } = useGlobalContext()
 
   const readAllKeys = async () => {
     const order = data_note.sort((a, b) => a.updatedAt - b.updatedAt)
@@ -35,7 +35,7 @@ export default function TabTwoScreen() {
          <Btn_New_Note />
         <ScrollView style = {{...styles.container, position : 'relative', top:0}} showsVerticalScrollIndicator = {false}>
           <View style = {{ height : 70}}></View>
-          <Published_list />
+          <Published_list data = {data_articles} />
           <Titre_Page titre='Brouillons' />
           <View style = {styles.element_block}>
             {

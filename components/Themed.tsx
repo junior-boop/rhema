@@ -7,14 +7,13 @@ import { Text as DefaultText, View as DefaultView } from 'react-native';
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from './useColorScheme';
+import { useEffect } from 'react';
 
-type ThemeProps = {
-  lightColor?: string;
-  darkColor?: string;
+type fontFamily = {
+  fontWeight? : '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900'
 };
 
-export type TextProps = ThemeProps & DefaultText['props'];
-export type ViewProps = ThemeProps & DefaultView['props'];
+export type TextProps = fontFamily & DefaultText['props'];
 
 export function useThemeColor(
   props: { light?: string; dark?: string },
@@ -30,16 +29,44 @@ export function useThemeColor(
   }
 }
 
+function Montserrat(props : fontFamily){
+  switch (props.fontWeight){
+    case '100':
+      return 'Poppins_Thin';
+    
+    case '200':
+      return 'Poppins_ExtraLight';
+    
+    case '300':
+      return 'Poppins_Light';
+    
+    case '400':
+      return 'Poppins';
+    
+    case '500':
+      return 'Poppins_Medium';
+    
+    case '600':
+      return 'Poppins_Semibold';
+    
+    case '700':
+      return 'Poppins_Bold';
+    
+    case '800':
+      return 'Poppins_Extrabold';
+    
+    case '900':
+      return 'Poppins_Black';
+    default:
+      return 'Poppins';
+  } 
+}
+
 export function Text(props: TextProps) {
-  const { style, lightColor, darkColor, ...otherProps } = props;
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+  const { style, fontWeight, ...otherProps } = props;
+  useEffect(() => {
 
-  return <DefaultText style={[{ color }, style]} {...otherProps} />;
+  })
+  return <DefaultText {...props} style={[props.style, { fontFamily: Montserrat(props)  }]}/>;
 }
 
-export function View(props: ViewProps) {
-  const { style, lightColor, darkColor, ...otherProps } = props;
-  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
-
-  return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
-}
