@@ -32,6 +32,9 @@ export default function TabOneScreen() {
     epingler : 0
   })
 
+  useEffect(() => {
+    console.log(note_content)
+  }, [])
 
     
     const handleSaveContent = async () => {
@@ -57,7 +60,6 @@ export default function TabOneScreen() {
       }
         
     }
-
 
 
 

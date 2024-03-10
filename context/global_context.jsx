@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { getData, setData, getAllKey, getAllArticles } from "../hooks/useDataQuery";
+import { getAllKey, getAllArticles } from "../hooks/useDataQuery";
 const GlobalContext = createContext()
 
 export default function GlobalContextProvider({children}){
@@ -38,7 +38,7 @@ export default function GlobalContextProvider({children}){
 
     useEffect(() => {
         getNote()
-        getAllArticles()
+        getArticles()
     }, [])
 
     return(

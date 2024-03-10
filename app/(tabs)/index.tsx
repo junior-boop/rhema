@@ -1,15 +1,14 @@
 import { Link } from 'expo-router';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, StatusBar } from 'react-native';
 import { TouchableOpacity } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 export default function TabOneScreen() {
   return (
       <SafeAreaView style = {styles.container} >
-        <StatusBar style='dark' backgroundColor='#fff' />
-        <View style = {{ flex : 1, backgroundColor : 'white', padding : 16 }}>
+        <StatusBar barStyle={"dark-content"} backgroundColor={"#f8fafc"} />
+        <View style = {{ flex : 1, backgroundColor : "#f8fafc", padding : 16 }}>
             <Link href={'/editor'} style= {{ width : 70, paddingHorizontal : 18, paddingVertical : 7, borderRadius : 5, backgroundColor : '#f4f4f4'}} >              
               <Text>Editor</Text>
             </Link>
@@ -21,6 +20,7 @@ export default function TabOneScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor : "#f8fafc"
   },
   webViewStyle : {
     height : 400

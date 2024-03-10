@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, ScrollView, TouchableOpacity, StatusBar,  } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, TouchableOpacity, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons';
 import Btn_New_Note from '../../components/btn_editor';
@@ -55,7 +55,7 @@ export default function TabTwoScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor : 'white'
+    backgroundColor : "#f8fafc"
   },
   title: {
     fontSize: 20,

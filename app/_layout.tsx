@@ -1,9 +1,10 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import { Platform } from 'react-native';
+import * as NavigationBar from 'expo-navigation-bar';
 
 import GlobalContextProvider from '../context/global_context'
 
@@ -22,6 +23,7 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  const visibility = NavigationBar.useVisibility()
   const [loaded, error] = useFonts({
     Poppins_Thin: require('../assets/fonts/static/Poppins-Thin.ttf'),
     Poppins_ExtraLight: require('../assets/fonts/static/Poppins-ExtraLight.ttf'),
@@ -34,6 +36,13 @@ export default function RootLayout() {
     Poppins_Black: require('../assets/fonts/static/Poppins-Black.ttf'),
     ...FontAwesome.font,
   });
+
+  useEffect(() => {
+    if(visibility === 'visible'){
+      Platform.OS === "android" && NavigationBar.setBackgroundColorAsync('white')
+      Platform.OS === "android" && NavigationBar.setBorderColorAsync('white')
+    }
+  }, [visibility])
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
@@ -49,6 +58,9 @@ export default function RootLayout() {
   if (!loaded) {
     return null;
   }
+
+
+
 
   return <RootLayoutNav />;
 }

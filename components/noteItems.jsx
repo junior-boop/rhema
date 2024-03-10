@@ -74,7 +74,7 @@ export default function NoteItems({note}){
     return(
       <View style = {{
         ...styles.View_1,
-        borderRadius : 8, 
+        borderRadius : 2, 
         borderColor : longSelection ? '#000' : '#e2e8f0',
         overflow : 'hidden',
         position : 'relative',
@@ -95,7 +95,7 @@ export default function NoteItems({note}){
         {
           longSelection && (<View style = {{
             position : 'absolute',
-            top : '3%',
+            top : 7,
             left : 0,
             width : "96%",
             zIndex : 3, 
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     ref : {
         paddingHorizontal : 8, 
         paddingVertical : 4,
-        borderRadius : 4, 
+        borderRadius : 1, 
         color : '#1e293b',
         fontSize : 13, 
         backgroundColor : '#e2e8f0',
