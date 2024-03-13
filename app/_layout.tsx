@@ -73,6 +73,7 @@ function RootLayoutNav() {
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="modal" options={{ presentation: 'modal', title : '' }} />
           <Stack.Screen name="[id]" options={{ title : '', headerShadowVisible : false}} />
+          <Stack.Screen name="article/[articles]" options={{ headerShown : false}} />
         </Stack>
       </GlobalContextProvider>
   );

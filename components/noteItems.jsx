@@ -5,6 +5,7 @@ import { router } from 'expo-router'
 import { LinearGradient } from "expo-linear-gradient"
 import NoteLongPress_Btn from './btn_noteLongPress'
 import { MaterialIcons } from '@expo/vector-icons';
+import { convert } from "../constants/convert"
 
 export default function NoteItems({note}){
   const [data, setData] = useState(null)
@@ -131,7 +132,7 @@ export default function NoteItems({note}){
           setLongSelection(true)
         }}
         >
-          <View style = {{ paddingHorizontal : 14}}>
+          <View style = {{ paddingHorizontal : convert(14)}}>
           {
             data !== null && data.hasOwnProperty('blocks') && (<Text fontWeight="500" style = {styles.titre}>{block_titre()}</Text>)
           }
@@ -153,34 +154,34 @@ const styles = StyleSheet.create({
     View_1 : {
         width : '100%',
         backgroundColor : "white",
-        borderWidth : 1,
-        paddingVertical : 12,
-        maxHeight : 300,
+        borderWidth : convert(1),
+        paddingVertical : convert(12),
+        maxHeight : convert(300),
         userSelect : 'none'
     },
     titre : {
-        fontSize : 16,
-        marginBottom : 5,
-        lineHeight : 18
+        fontSize : convert(16),
+        marginBottom : convert(5),
+        lineHeight : convert(18)
     }, 
     View_2 : { 
         overflow : 'hidden',
         position : 'relative',
         height : 'auto',
-        maxHeight : 150
+        maxHeight : convert(150)
     },
 
     texte : {
-        fontSize : 14,
-        lineHeight : 17,
+        fontSize : convert(14),
+        lineHeight : convert(17),
         color : '#444'
     },
     ref : {
-        paddingHorizontal : 8, 
-        paddingVertical : 4,
-        borderRadius : 1, 
+        paddingHorizontal : convert(8), 
+        paddingVertical : (4),
+        borderRadius : (1), 
         color : '#1e293b',
-        fontSize : 13, 
+        fontSize : convert(13), 
         backgroundColor : '#e2e8f0',
         width : 'auto'
     }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { ScrollView, View } from "react-native"
 import { Text } from "./Themed"
+import { convert } from "@/constants/convert"
 
 interface multipeSelection {
     items : Array<any>,
@@ -31,8 +32,8 @@ export default function MultipleSelection({items, value, onChange} : multipeSele
     return(
       <View style = {{paddingVertical : 32, alignItems : 'center'}}>
         <ScrollView 
-        style = {{ height : 390,  width: "100%" }}
-        contentContainerStyle = {{ alignItems : 'center', paddingVertical : 12}}
+        style = {{ height : convert(390),  width: "100%" }}
+        contentContainerStyle = {{ alignItems : 'center', paddingVertical : convert(12)}}
         >
         <View style = {{ flexDirection : 'row', justifyContent : 'center', alignItems : 'center', alignContent : 'center', width :'85%', gap : 4, flexWrap : 'wrap'}}>
             {
@@ -79,5 +80,5 @@ export default function MultipleSelection({items, value, onChange} : multipeSele
     //   else onChangeValue(undefined)
     // }, [state])
   
-    return(<Text onPress={handlePress} fontWeight='500' style = {{ paddingHorizontal : 16, paddingVertical : 7, backgroundColor: state ? '#1e293b': '#e2e8f0', fontSize : 16, borderRadius : 50, color : state ? 'white' : 'black'  }}>{value.hash}</Text>)
+    return(<Text onPress={handlePress} fontWeight='500' style = {{ paddingHorizontal : convert(16), paddingVertical : 7, backgroundColor: state ? '#1e293b': '#e2e8f0', fontSize : convert(16), borderRadius : convert(50), color : state ? 'white' : 'black'  }}>{value.hash}</Text>)
   }

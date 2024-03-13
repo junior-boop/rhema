@@ -2,6 +2,7 @@ import { TextInput, TouchableOpacity, View } from "react-native";
 import { Text } from "./Themed";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
+import { convert } from "@/constants/convert";
 
 
 
@@ -61,17 +62,17 @@ export default function ReferenceBiblique({ onChange } : { onChange : (T:any) =>
 
     return(
         <View>
-          <View style = {{paddingHorizontal : 20, paddingTop : 20, paddingBottom : 10}}>
+          <View style = {{paddingHorizontal : convert(20), paddingTop : convert(20), paddingBottom : 10}}>
             <Text fontWeight='700' style = {{textTransform : 'uppercase', color : '#777'}} >Reference Biblique*</Text>
           </View>
           {
-            table.length > 0 && (<View style = {{ paddingHorizontal : 20, flexDirection : "row", marginBottom : 10, gap : 5, flexWrap : "wrap"}}>
+            table.length > 0 && (<View style = {{ paddingHorizontal : convert(20), flexDirection : "row", marginBottom : convert(10), gap : 5, flexWrap : "wrap"}}>
             {
                 table.map((el, key) => <ReferenceComponent refs = {el} key={key}/>)
             }
           </View>)
           }
-          <View style = {{ paddingHorizontal : 14}}>
+          <View style = {{ paddingHorizontal : convert(14)}}>
           <View style = {{flexDirection : 'row', alignItems : 'center', borderWidth : 1, borderColor : '#e2e8f0', borderRadius : 8}}>
             
             <TextInput
@@ -80,9 +81,9 @@ export default function ReferenceBiblique({ onChange } : { onChange : (T:any) =>
                 onChangeText={text => setRef(text)}
                 value={ref}
                 textAlignVertical='center'
-                style={{ fontSize : 18, fontFamily : 'Poppins',  justifyContent : 'center', borderRadius : 8, marginBottom : -4, flex : 1, paddingLeft : 8}}
+                style={{ fontSize : convert(18), fontFamily : 'Poppins',  justifyContent : 'center', borderRadius : convert(8), marginBottom : -4, flex : 1, paddingLeft : convert(8)}}
               />
-            <TouchableOpacity onPress={handleClick} style = {{ height : 40, width : 40,  alignItems : 'center', justifyContent : 'center'}}>
+            <TouchableOpacity onPress={handleClick} style = {{ height : convert(40), width : convert(40),  alignItems : 'center', justifyContent : 'center'}}>
               <MaterialIcons name="add" size={24} color="black" />
             </TouchableOpacity>
           </View>

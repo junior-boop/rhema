@@ -1,6 +1,7 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from "react";
+import { RiDeleteBin6Line, RiSaveFill, RiSaveLine, RiShareForwardBoxFill } from "./icons";
 
 type standardBtn = {
     name : React.ComponentProps<typeof MaterialCommunityIcons>['name'],
@@ -10,7 +11,16 @@ type standardBtn = {
 function StandardBtn({name, onPress}:standardBtn){
     return (
         <TouchableOpacity onPress={onPress} style = {styles.btn}>
-            <MaterialCommunityIcons name={name} size={24} color="black"  />
+            {
+                name === 'content-save' 
+                ? <RiSaveLine width={24} height={24} color="black"  />
+                : name === 'delete'
+                ? <RiDeleteBin6Line width={24} height={24} color="black"  /> 
+                : name === 'share' 
+                ? <RiShareForwardBoxFill width={24} height={24} color="black"  />
+                : null
+
+            }
         </TouchableOpacity>
     )
 }

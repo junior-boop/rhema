@@ -41,7 +41,7 @@ export default function Btn_New_Note(){
             params :  {
                 id : obj.noteId, 
                 userid : "daniel_10000-20000-30000", 
-                note_content : '{"blocks":[{"type":"titre","data":{"text":"Votres titre"}},{"type":"paragraph","data":{"text":"Faites nous grandir dans la foi"}}]}'
+                note_content : '{"blocks":[{"type":"titre","data":{"text":"Votre titre"}},{"type":"paragraph","data":{"text":"Faites nous grandir dans la foi"}}]}'
               }})
     }
 

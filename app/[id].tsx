@@ -5,6 +5,8 @@ import { useGlobalContext } from '@/context/global_context';
 import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import StandardBtn from '../components/standardBtn';
+import { Asset } from 'expo-asset';
+import * as FileSystem from 'expo-file-system'
 
 
 export default function TabOneScreen() {
@@ -12,6 +14,7 @@ export default function TabOneScreen() {
   const [isSaving, setIsSaving] = useState(false)
   const empty_string = '{"blocks":[{"type":"titre","data":{"text":"Votre titre"}},{"type":"paragraph","data":{"text":"Faites nous grandir dans la foi"}}]}' 
   const {id, userid, note_content} = useLocalSearchParams()
+  const [htmlSource, setHtmlSource] = useState('')
   const html = () => {
     if(note_content === undefined) {
       return empty_string
@@ -24,6 +27,17 @@ export default function TabOneScreen() {
 
 
   }
+
+  
+   
+  const files = async () => {
+      const localhtml = require('../assets/editor.html')
+      const [{localUri, uri}, test] = await Asset.loadAsync(localhtml)
+      const fileHtml = await FileSystem.readAsStringAsync(localUri as string)
+      setHtmlSource(fileHtml)
+  }
+
+  
   
   const [note_data, set_note_data] = useState({
     noteId : id,
@@ -36,7 +50,9 @@ export default function TabOneScreen() {
     console.log(note_content)
   }, [])
 
-    
+  useEffect (() => {
+    files()
+  }, [])
     const handleSaveContent = async () => {
       if(note_data.note_content.length > 0){
         setIsSaving(true)
@@ -88,11 +104,11 @@ export default function TabOneScreen() {
                 title : '',
                 headerRight : () => (
                   <View style = {styles.headerRight}>
-                      <StandardBtn name='pin-outline' />
+                      <StandardBtn name='delete' />
                       {
-                        isSaving ? <View style = {{ width :42, height : 42, borderRadius : 50, alignItems : 'center', justifyContent : 'center', backgroundColor : '#f0f9ff' }}><ActivityIndicator size={'small'} color={'#000'} /></View> : <StandardBtn name='content-save-outline' onPress={handleSaveContent} />
+                        isSaving ? <View style = {{ width :42, height : 42, borderRadius : 50, alignItems : 'center', justifyContent : 'center', backgroundColor : '#f0f9ff' }}><ActivityIndicator size={'small'} color={'#000'} /></View> : <StandardBtn name='content-save' onPress={handleSaveContent} />
                       }
-                      <StandardBtn name='delete-outline' />
+                      <StandardBtn name='share' />
                   </View>
                 ),
             }}
@@ -102,7 +118,7 @@ export default function TabOneScreen() {
         <WebView
             style = {styles.webViewStyle}
             originWhitelist={['*']}
-            source = {{ uri : 'editor-a1b.pages.dev'}}
+            source = {{html : htmlSource}}
             javaScriptEnabled
             startInLoadingState = {true}
             renderLoading={() => (
@@ -149,3 +165,5 @@ const styles = StyleSheet.create({
     gap : 3
   }
 });
+
+// { uri : 'https://editor-a1b.pages.dev'}

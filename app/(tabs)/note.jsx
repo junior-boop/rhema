@@ -8,6 +8,8 @@ import Titre_Page from '../../components/titre_page'
 import Column from '../../components/columns';
 import Published_list from '../../components/publish_list'
 
+import { convert } from '../../constants/convert'
+
 export default function TabTwoScreen() {
   const [element, setElement] = useState([])
   const { data_note, data_articles } = useGlobalContext()
@@ -24,8 +26,8 @@ export default function TabTwoScreen() {
   return (
     <SafeAreaView style={{...styles.container, position : 'relative'}}>
         <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
-        <View style = {{ width : '100%', paddingVertical : 12, paddingHorizontal : 16, top : 26, zIndex : 12, position : 'absolute' }}>
-            <TouchableOpacity style = {{ backgroundColor : '#f1f5f9', height : 48, borderRadius : 60, flexDirection : 'row', alignItems : 'center', gap : 12, justifyContent:'center', width:'100%'}}>
+        <View style = {{ width : '100%', paddingVertical : convert(12), paddingHorizontal : convert(16), top : convert(26), zIndex : 12, position : 'absolute' }}>
+            <TouchableOpacity style = {{ backgroundColor : '#f1f5f9', height : convert(48), borderRadius : convert(60), flexDirection : 'row', alignItems : 'center', gap : 12, justifyContent:'center', width:'100%'}}>
                 <View>
                     <AntDesign name="search1" size={20} color="black" />
                 </View>
@@ -58,23 +60,23 @@ const styles = StyleSheet.create({
     backgroundColor : "#f8fafc"
   },
   title: {
-    fontSize: 20,
+    fontSize: convert(20),
     fontWeight: 'bold',
   },
   separator: {
-    marginVertical: 30,
+    marginVertical: convert(30),
     height: 1,
     width: '80%',
   },
 
   text : {
-    fontSize : 18
+    fontSize : convert(18)
   },
   vide : {
-    height : 24 + 48
+    height : convert(24 + 48)
   },
   element_block : {
-    paddingHorizontal : 8
+    paddingHorizontal : convert(8)
   },
 
   
