@@ -50,6 +50,5 @@ export const getAllKey = async () => {
 export const getAllArticles = async () => {
     const request = await fetch('https://nuvelserver.godigital.workers.dev/articles/daniel_10000-20000-30000/doc/')
     const response =  await request.json()
-    
    return response
 }

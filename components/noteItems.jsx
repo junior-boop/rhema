@@ -118,12 +118,13 @@ export default function NoteItems({note}){
         <TouchableOpacity
 
         onPress={() => {
+            const {noteId, note_content, userId} = note
             router.navigate({
               pathname : '/[id]', 
               params : {
-                id : note.noteId, 
-                userid : note.userId, 
-                note_content : note.note_content.length === 0 ? null : note.note_content
+                id : noteId, 
+                userid : userId, 
+                note_content : note_content.length === 0 ? null : note_content
               }
             })
         }}

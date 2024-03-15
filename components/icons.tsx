@@ -86,3 +86,68 @@ export function RiShareForwardBoxFill(props : SvgProps) {
     <Svg viewBox="0 0 24 24" {...props}><Path fill="currentColor" d="M9 3v2H4v14h16v-9h2v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm7 2V1l7 6h-9a2 2 0 0 0-2 2v6h-2V9a4 4 0 0 1 4-4z"></Path></Svg>
   )
 }
+
+// left 
+export function RiArrowLeftLine(props: SvgProps) {
+  return (
+    <Svg viewBox="0 0 24 24" {...props}><Path fill="currentColor" d="M7.828 11H20v2H7.828l5.364 5.364l-1.414 1.414L4 12l7.778-7.778l1.414 1.414z"></Path></Svg>
+  )
+}
+// share
+export function RiShareLine(props: SvgProps) {
+  return (
+    <Svg viewBox="0 0 24 24" {...props}><Path fill="currentColor" d="m13.12 17.023l-4.199-2.29a4 4 0 1 1 0-5.465l4.2-2.29a4 4 0 1 1 .958 1.755l-4.2 2.29a4.008 4.008 0 0 1 0 1.954l4.2 2.29a4 4 0 1 1-.959 1.755M6 14a2 2 0 1 0 0-4a2 2 0 0 0 0 4m11-6a2 2 0 1 0 0-4a2 2 0 0 0 0 4m0 12a2 2 0 1 0 0-4a2 2 0 0 0 0 4"></Path></Svg>
+  )
+}
+
+// warning 
+export function RiErrorWarningLine(props: SvgProps) {
+  return (
+    <Svg viewBox="0 0 24 24" {...props}><Path fill="currentColor" d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10m0-2a8 8 0 1 0 0-16a8 8 0 0 0 0 16m-1-5h2v2h-2zm0-8h2v6h-2z"></Path></Svg>
+  )
+}
+
+// download
+export function RiDownload2Line(props: SvgProps) {
+  return (
+    <Svg viewBox="0 0 24 24" {...props}><Path fill="currentColor" d="M13 10h5l-6 6l-6-6h5V3h2zm-9 9h16v-7h2v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-8h2z"></Path></Svg>
+  )
+}
+
+// Amen
+export function RiOpenArmLine(props: SvgProps) {
+  return (
+    <Svg viewBox="0 0 24 24" {...props}><Path fill="currentColor" d="M18 17v5h-2v-5a11 11 0 0 1 6.448-10.016l.827 1.82A9.002 9.002 0 0 0 18 17M8 17v5H6v-5A9.002 9.002 0 0 0 .726 8.805l.827-1.821A11.002 11.002 0 0 1 8 17m4-5a5 5 0 1 1 0-10a5 5 0 0 1 0 10m0-2a3 3 0 1 0 0-6a3 3 0 0 0 0 6"></Path></Svg>
+  )
+}
+
+export function RiOpenArmFill(props: SvgProps) {
+  return (
+    <Svg viewBox="0 0 24 24" {...props}><Path fill="currentColor" d="M12 12a5 5 0 1 1 0-10a5 5 0 0 1 0 10m6 5v5h-2v-5a11 11 0 0 1 6.448-10.016l.827 1.82A9.002 9.002 0 0 0 18 17M8 17v5H6v-5A9.002 9.002 0 0 0 .726 8.805l.827-1.821A11.002 11.002 0 0 1 8 17"></Path></Svg>
+  )
+}
+
+// Comment
+export function RiChat2Line(props: SvgProps) {
+  return (
+    <Svg viewBox="0 0 24 24" {...props}><Path fill="currentColor" d="M14.45 19L12 22.5L9.55 19H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1zm-1.041-2H20V5H4v12h6.591L12 19.012z"></Path></Svg>
+  )
+}
+
+export function RiCloseLine(props: SvgProps) {
+  return (
+    <Svg viewBox="0 0 24 24" {...props}><Path fill="currentColor" d="m12 10.587l4.95-4.95l1.414 1.414l-4.95 4.95l4.95 4.95l-1.415 1.414l-4.95-4.95l-4.949 4.95l-1.414-1.415l4.95-4.95l-4.95-4.95L7.05 5.638z"></Path></Svg>
+  )
+}
+
+export function RiChatNewLine(props: SvgProps) {
+  return (
+    <Svg viewBox="0 0 24 24" {...props}><Path fill="currentColor" d="M14 3v2H4v13.385L5.763 17H20v-7h2v8a1 1 0 0 1-1 1H6.455L2 22.5V4a1 1 0 0 1 1-1zm5 0V0h2v3h3v2h-3v3h-2V5h-3V3z"></Path></Svg>
+  )
+}
+
+export function RiUser6Line(props: SvgProps) {
+  return (
+    <Svg viewBox="0 0 24 24" {...props}><Path fill="currentColor" d="M12 17c3.662 0 6.865 1.575 8.607 3.925l-1.842.871C17.347 20.116 14.847 19 12 19c-2.848 0-5.347 1.116-6.765 2.796l-1.841-.872C5.136 18.574 8.338 17 12 17m0-15a5 5 0 0 1 5 5v3a5 5 0 0 1-4.783 4.995L12 15a5 5 0 0 1-5-5V7a5 5 0 0 1 4.783-4.995zm0 2a3 3 0 0 0-2.995 2.824L9 7v3a3 3 0 0 0 5.995.176L15 10V7a3 3 0 0 0-3-3"></Path></Svg>
+  )
+}

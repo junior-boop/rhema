@@ -9,10 +9,13 @@ import MultipleSelection from '@/components/multiselecter';
 import { MaterialIcons } from '@expo/vector-icons';
 import ReferenceBiblique from '@/components/referece';
 import { Router } from 'expo-router';
+import { useGlobalContext } from '@/context/global_context';
 // import Loading from '../assets/images/SvgSpinners3DotsFade.svg'
 
 export default function ModalScreen() {
-  const {note_content, id} = useLocalSearchParams()
+  const {id} = useLocalSearchParams()
+  const { getNote } = useGlobalContext()
+  const { note_content } = getNote(id as string)
   const note  = JSON.parse(note_content as string)
   const [char, setChar] = useState(0)
   const [ref, setRef] = useState('')

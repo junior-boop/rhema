@@ -9,10 +9,13 @@ export default function User_Publish_item({ titre, description, data}:{ titre : 
     return(
         <TouchableOpacity
             onPress={() => {
+                const { articleId, article_content } = data
+                console.log(articleId)
                 router.navigate({
                     pathname : '/article/[articles]',
                     params : {
-                        articles : '1234444'
+                        articles : articleId,
+                        article_content : article_content
                     }
                 })
             }}

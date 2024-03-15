@@ -26,23 +26,28 @@ export default function GlobalContextProvider({children}){
         }
     }, [data_note])
 
-    const getNote = async () => {
+    const getAllNote = async () => {
         const data = await getAllKey()
         setData_note(data)
     }
 
-    const getArticles = async () => {
+    const getNote = (id) => {
+        const noteSelect = data_note.filter(el => el.noteId === id)
+        return noteSelect[0]
+    }
+
+    const getAllPublication = async () => {
         const data = await getAllArticles()
         setArticles(data)
     }
 
     useEffect(() => {
-        getNote()
-        getArticles()
+        getAllNote()
+        getAllPublication()
     }, [])
 
     return(
-        <GlobalContext.Provider value={{data_note, data_articles, SaveData, LongSel}}>
+        <GlobalContext.Provider value={{data_note, data_articles, SaveData, LongSel, getNote}}>
             {children}
         </GlobalContext.Provider>
     )
@@ -50,6 +55,8 @@ export default function GlobalContextProvider({children}){
 
 /**
  * @typedef {{ longSelection : boolean, setLongSelection : (value) => React.Dispatch<boolean>}} LongSelProps
- * @returns {{ data_note : Array<any>, SaveData : (value) => React.Dispatch<[]>, LongSel : LongSelProps }}
+ * @typedef {{name : string, userId : string, }} USER
+ * @typedef {{note_content : string, createdAt : number, createdBy : USER, epingler : boolean, published : boolean, noteId : string, userId : string}} note_content
+ * @returns {{ data_note : Array<any>, SaveData : (value) => React.Dispatch<[]>, LongSel : LongSelProps, getNote : (id : string) => note_content }}
  */
 export const useGlobalContext = () => useContext(GlobalContext)
