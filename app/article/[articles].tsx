@@ -19,6 +19,7 @@ export default function Articles() {
   const [progress, setProgress] = useState(0)
   const [appreciation, setAppreciation] = useState(false)
   const [openModal, setOpenModal] = useState(false)
+  const [onClose, setOnClose] = useState(false)
 
   const AppbarPos = useRef(new Animated.Value(-30)).current
   const BottombarPos = useRef(new Animated.Value(-30)).current
@@ -99,6 +100,7 @@ export default function Articles() {
 
   const handleDarkSide = () => {
     setOpenModal(!openModal)
+    setOnClose(false)
     console.log('je fonctionne')
   }
   return (
@@ -165,7 +167,12 @@ export default function Articles() {
         </View>
       </Animated.View>
       {
-        openModal && <ModalComment onToucheDarkSide={handleDarkSide} open={openModal} close={() => setOpenModal(false)} />
+        openModal && <ModalComment onToucheDarkSide={handleDarkSide} open={onClose} close={() => {
+          setOnClose(false)
+          setTimeout(() => {
+            setOpenModal(false)
+          }, 2000)
+        }} />
       }
     </SafeAreaView>
   )

@@ -85,6 +85,10 @@ export default function TabOneScreen() {
             </Text>
           </View>
           <TouchableOpacity
+            onPress={() => {
+              router.navigate('/account/index')
+            }
+            }
             style={{
               width: 36,
               aspectRatio: 1,

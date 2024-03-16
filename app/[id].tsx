@@ -23,7 +23,7 @@ export default function TabOneScreen() {
   const { note_content, userId } = getNote(id as string)
 
   const html = () => {
-    if (note_content === undefined) {
+    if (note_content === undefined || note_content.length === 0) {
       return empty_string
     }
     if (note_content !== null) {

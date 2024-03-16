@@ -38,7 +38,7 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    if(visibility === 'visible'){
+    if (visibility === 'visible') {
       Platform.OS === "android" && NavigationBar.setBackgroundColorAsync('white')
       Platform.OS === "android" && NavigationBar.setBorderColorAsync('white')
     }
@@ -68,13 +68,16 @@ export default function RootLayout() {
 function RootLayoutNav() {
 
   return (
-      <GlobalContextProvider>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal', title : '' }} />
-          <Stack.Screen name="[id]" options={{ title : '', headerShadowVisible : false}} />
-          <Stack.Screen name="article/[articles]" options={{ headerShown : false}} />
-        </Stack>
-      </GlobalContextProvider>
+    <GlobalContextProvider>
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="modal" options={{ presentation: 'modal', title: '' }} />
+        <Stack.Screen name="[id]" options={{ title: '', headerShadowVisible: false }} />
+        <Stack.Screen name="article/[articles]" options={{ headerShown: false }} />
+        <Stack.Screen name="account/index" options={{ title: '' }} />
+        <Stack.Screen name="account/[account]" options={{ title: '' }} />
+        <Stack.Screen name="login" options={{ headerShown: false }} />
+      </Stack>
+    </GlobalContextProvider>
   );
 }
