@@ -12,7 +12,7 @@ import { Text } from '@/components/Themed';
 
 
 export default function TabOneScreen() {
-  const { SaveData, getNote } = useGlobalContext()
+  const { SaveData, getNote, testePromise } = useGlobalContext()
   const [isSaving, setIsSaving] = useState(false)
   const empty_string = '{"blocks":[{"type":"titre","data":{"text":"Votre titre"}},{"type":"paragraph","data":{"text":"Faites nous grandir dans la foi"}}]}'
   const { id } = useLocalSearchParams()
@@ -20,7 +20,7 @@ export default function TabOneScreen() {
   const [progress, setProgress] = useState(0)
   const progessPos = useRef(new Animated.Value(0)).current
 
-  const { note_content, userId } = getNote(id as string)
+  const { note_content, userId, published } = getNote(id as string)
 
   const html = () => {
     if (note_content === undefined || note_content.length === 0) {
@@ -35,8 +35,8 @@ export default function TabOneScreen() {
 
 
 
+  const localhtml = require('../assets/editor.html')
   const files = async () => {
-    const localhtml = require('../assets/editor.html')
     const [{ localUri }] = await Asset.loadAsync(localhtml)
     const fileHtml = await FileSystem.readAsStringAsync(localUri as string)
     setHtmlSource(fileHtml)
@@ -108,7 +108,9 @@ export default function TabOneScreen() {
               {
                 isSaving ? <View style={{ width: 42, height: 42, borderRadius: 50, alignItems: 'center', justifyContent: 'center', backgroundColor: '#f0f9ff' }}><ActivityIndicator size={'small'} color={'#000'} /></View> : <StandardBtn name='content-save' onPress={handleSaveContent} />
               }
-              <StandardBtn name='share' />
+              {
+                published !== 'false' ? <StandardBtn name='share' /> : <StandardBtn name='update' />
+              }
             </View>
           ),
         }}
@@ -118,7 +120,9 @@ export default function TabOneScreen() {
       <WebView
         style={styles.webViewStyle}
         originWhitelist={['*']}
-        source={{ html: htmlSource }}
+        source={Platform.OS === 'android'
+          ? { html: htmlSource }
+          : localhtml}
         javaScriptEnabled
         onLoadProgress={(e) => setProgress(e.nativeEvent.progress)}
         startInLoadingState={true}

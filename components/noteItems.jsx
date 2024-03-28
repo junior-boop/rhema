@@ -107,7 +107,7 @@ export default function NoteItems({note}){
           }}>
   
             {data !== null && <NoteLongPress_Btn icon={<MaterialIcons name="publish" size={18} color="white"/>} onPress={() => {
-              router.navigate({pathname : '/modal', params : {note_content : note.note_content, id:note.noteId}})
+              router.navigate({pathname : '/modal', params : {id:note.noteId}})
               setLongSelection(false)
             } } />}
             <NoteLongPress_Btn icon={<MaterialIcons name="delete-outline" size={18} color="white" />} />

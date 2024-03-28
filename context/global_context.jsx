@@ -36,6 +36,18 @@ export default function GlobalContextProvider({children}){
         return noteSelect[0]
     }
 
+    const testePromise = (id) => {
+        const value = new Promise((resolve, reject) => {
+            const noteSelect = data_note.filter(el => el.noteId === id)
+            resolve(noteSelect[0])
+
+            reject(console.log('il y a une erreur'))
+        })
+
+        return value
+    }
+
+
     const getAllPublication = async () => {
         const data = await getAllArticles()
         setArticles(data)
@@ -47,7 +59,7 @@ export default function GlobalContextProvider({children}){
     }, [])
 
     return(
-        <GlobalContext.Provider value={{data_note, data_articles, SaveData, LongSel, getNote}}>
+        <GlobalContext.Provider value={{data_note, data_articles, SaveData, LongSel, getNote, testePromise }}>
             {children}
         </GlobalContext.Provider>
     )
@@ -56,7 +68,7 @@ export default function GlobalContextProvider({children}){
 /**
  * @typedef {{ longSelection : boolean, setLongSelection : (value) => React.Dispatch<boolean>}} LongSelProps
  * @typedef {{name : string, userId : string, }} USER
- * @typedef {{note_content : string, createdAt : number, createdBy : USER, epingler : boolean, published : boolean, noteId : string, userId : string}} note_content
- * @returns {{ data_note : Array<any>, SaveData : (value) => React.Dispatch<[]>, LongSel : LongSelProps, getNote : (id : string) => note_content }}
+ * @typedef {{note_content : string, createdAt : number, createdBy : USER, epingler : boolean, published : string | object, noteId : string, userId : string}} note_content
+ * @returns {{ data_note : Array<any>, SaveData : (value) => React.Dispatch<[]>, LongSel : LongSelProps, getNote : (id : string) => note_content, testePromise : (id:string) => Promise<any> }}
  */
 export const useGlobalContext = () => useContext(GlobalContext)
